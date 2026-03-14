@@ -1,7 +1,7 @@
-import Fuse from "fuse.js";
+import Fuse, { type IFuseOptions } from "fuse.js";
 import type { SearchItem } from "./types";
 
-const fuseOptions: Fuse.IFuseOptions<SearchItem> = {
+const fuseOptions: IFuseOptions<SearchItem> = {
   threshold: 0.3,
   keys: [
     { name: "name", weight: 2.0 },
