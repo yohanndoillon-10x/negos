@@ -68,6 +68,41 @@ export function buildLinkMap(
     });
   }
 
+  // Aliases for common informal wikilinks that don't match exact slugs/names
+  const aliases: Record<string, { type: string; slug: string }> = {
+    "accusation audit": { type: "principles", slug: "voss-05-accusation-audit" },
+    "batna": { type: "concepts", slug: "batna-and-alternatives" },
+    "calibrated question": { type: "principles", slug: "voss-04-calibrated-questions" },
+    "commitment and consistency": { type: "principles", slug: "cialdini-02-commitment-consistency" },
+    "commitment": { type: "concepts", slug: "credible-commitment" },
+    "containment": { type: "principles", slug: "kennan-01-patient-containment" },
+    "contrast": { type: "authors", slug: "cialdini" },
+    "firm but patient containment": { type: "principles", slug: "kennan-01-patient-containment" },
+    "fisher & ury": { type: "authors", slug: "fisher-ury" },
+    "formula-detail approach": { type: "principles", slug: "zartman-04-formula-detail" },
+    "formula": { type: "principles", slug: "zartman-04-formula-detail" },
+    "inventing options for mutual gain": { type: "principles", slug: "fisher-ury-03-invent-options" },
+    "label": { type: "principles", slug: "voss-03-labeling" },
+    "mirror": { type: "principles", slug: "voss-02-mirroring" },
+    "power": { type: "concepts", slug: "power-asymmetry" },
+    "pre-suasion": { type: "authors", slug: "cialdini" },
+    "principled negotiation": { type: "authors", slug: "fisher-ury" },
+    "reframing positions as interests": { type: "principles", slug: "fisher-ury-02-focus-on-interests" },
+    "rimland theory": { type: "principles", slug: "spykman-01-rimland-positioning" },
+    "ripeness": { type: "concepts", slug: "timing-and-ripeness" },
+  };
+
+  for (const [alias, target] of Object.entries(aliases)) {
+    if (!map.has(alias)) {
+      const route = `/${target.type}/${target.slug}`;
+      const existing = [...map.values()].find((v) => v.route === route);
+      map.set(alias, {
+        route,
+        displayName: existing?.displayName || target.slug,
+      });
+    }
+  }
+
   return map;
 }
 
